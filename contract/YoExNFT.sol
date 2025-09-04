@@ -159,7 +159,7 @@ contract YOEXNFT {
     function tokenURI(uint256 tokenId) external view returns (string memory) {
         require(_owners[tokenId] != address(0));
         return string(abi.encodePacked(
-            "https://raw.githubusercontent.com/yoexstaking/nft_metadata/refs/heads/main/metadata",
+            "https://raw.githubusercontent.com/yoexstaking/nft_metadata/refs/heads/main/metadata/",
             toString(tokenId),
             ".json"
         ));
