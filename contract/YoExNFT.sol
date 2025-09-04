@@ -110,12 +110,10 @@ contract YOEXNFT {
         return string(buffer);
     }
 
-    // ERC165
     function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == 0x01ffc9a7 || interfaceId == 0x80ac58cd || interfaceId == 0x5b5e139f;
     }
 
-    // Core ERC721
     function balanceOf(address addr) external view returns (uint256) {
         require(addr != address(0));
         return _balances[addr];
@@ -190,7 +188,6 @@ contract YOEXNFT {
         emit Transfer(address(0), to, tokenId);
     }
 
-    // Registration
     function register(address sponsorWallet) external {
         require(!isRegistered[msg.sender]);
         require(sponsorWallet != msg.sender);
@@ -202,7 +199,6 @@ contract YOEXNFT {
         emit Registered(msg.sender, sponsorWallet);
     }
 
-    // NFT Creation
     function createNFT(
         string calldata nft_name,
         string calldata nft_description,
@@ -223,7 +219,6 @@ contract YOEXNFT {
         emit Minted(tokenId, msg.sender, nft_name, nft_price);
     }
 
-    // Marketplace
     function listNFT(uint256 tokenId, uint256 price) external {
         require(ownerOf(tokenId) == msg.sender);
         require(block.timestamp >= _meta[tokenId].lockEnd);
@@ -240,7 +235,6 @@ contract YOEXNFT {
         address seller = ownerOf(tokenId);
         require(seller != msg.sender);
 
-        // Set lock plan and duration
         _meta[tokenId].plan = LockPlan(lockPlanChoice);
         if (lockPlanChoice > 0) {
             _meta[tokenId].lockEnd = uint64(block.timestamp + _lockDuration(lockPlanChoice));
@@ -248,7 +242,6 @@ contract YOEXNFT {
 
         listings[tokenId].active = false;
 
-        // Calculate commission
         uint256 commission = 0;
         address sponsor = sponsorOf[seller];
         uint16 commBps = _commissionBps(LockPlan(lockPlanChoice));
@@ -265,7 +258,6 @@ contract YOEXNFT {
 
         buyHistory[msg.sender].push(Purchase(tokenId, lst.price, block.timestamp, seller));
 
-        // Update sell history
         Sale[] storage sHist = sellHistory[seller];
         for (uint i = 0; i < sHist.length; i++) {
             if (sHist[i].tokenId == tokenId && !sHist[i].completed) {
@@ -292,7 +284,6 @@ contract YOEXNFT {
         return 0;
     }
 
-    // View functions
     function totalSupply() external view returns (uint256) {
         return _nextId - 1;
     }
@@ -347,7 +338,6 @@ contract YOEXNFT {
         prices = new uint256[](activeCount);
         uint256 index = 0;
         
-        // Fill arrays
         for (uint256 i = 1; i < _nextId; i++) {
             if (listings[i].active) {
                 tokenIds[index] = i;
@@ -396,7 +386,6 @@ contract YOEXNFT {
     }
 
 
-    // Unlist function
     function unlistNFT(uint256 tokenId) external {
         require(msg.sender == owner || ownerOf(tokenId) == msg.sender);
         listings[tokenId].active = false;
