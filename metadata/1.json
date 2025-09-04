@@ -1,8 +1,8 @@
 {
-  "name": "Yo Ex First NFT #1",
-  "description": "this is first NFT",
+  "name": "YOEX CyraX",
+  "description": "CyraX is not just an NFT; she’s a symbol of power, mystery, and futuristic beauty. Born in the metaverse, she embodies the fusion of technology and artistry. With glowing cybernetic features, neon-infused aura, and a fearless gaze, CyraX represents the new era of digital revolution.",
   "image": "https://res.cloudinary.com/dw0simsid/image/upload/v1756974912/NFT_YOEX_NFT_Vectors_756da891-3866-406a-b51e-014dae081a63_bgq8k5.png",
   "attributes": [
-    { "trait_type": "Base Price", "value": "1000" }
+    { "trait_type": "Base Price", "value": "50000000000000000000" }
   ]
 }
